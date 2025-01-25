@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Word Square Game</title>
+</head>
+<body>
+    <h1>Word Square Game</h1>
+    <form action="/play" method="post" id="game-form">
+        <label for="user_input">Enter your word:</label>
+        <input type="text" id="user_input" name="user_input">
+        <button type="submit">Submit</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('game-form').onsubmit = async (e) => {
+            e.preventDefault();
+            const userInput = document.getElementById('user_input').value;
+            const response = await fetch('/play', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ user_input: userInput })
+            });
+            const data = await response.json();
+            document.getElementById('result').textContent = data.result;
+        };
+    </script>
+</body>
+</html>
